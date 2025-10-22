@@ -3,15 +3,14 @@ import "./Main.css";
 import LeftSection from "./LeftSection";
 import RightSection from "./RightSection";
 const Main = () => {
-  const API_KEY =
-    "live_tbB37LmNuBZ7MV7Mz3g694YXb5Jc3yKmrYCu6IaQGM9QWSWXf4iW9lghX0N3uXDS";
+  const API_KEY = import.meta.env.VITE_CAT_API_KEY;
   const [cats, setCats] = useState(null);
-  const [prevImages, setPrevImages] = useState([]);
+  const [viewedCats, setViewedCats] = useState([]);
   const [banList, setBanList] = useState([]);
 
   const fetchCats = async () => {
     const params = new URLSearchParams({
-      limit: 1,
+      limit: 10,
       page: 0,
       order: "RAND",
       has_breeds: 1,
@@ -26,23 +25,50 @@ const Main = () => {
     );
 
     const data = await res.json();
-    console.log("API Response:", data);
-    setCats(data[0]);
-    console.log(data[0]);
-    console.log(cats);
-    setPrevImages((prevImages) => [...prevImages, data[0]]);
-    console.log(prevImages);
+
+    const isCatBanned = (cat) => {
+      if (!cat.breeds || cat.breeds.length === 0) return false;
+
+      const breed = cat.breeds[0];
+      const catAttributes = [
+        breed.name,
+        breed.origin,
+        breed.weight?.imperial || "N/A",
+        breed.life_span,
+      ];
+
+      return catAttributes.some((attribute) => banList.includes(attribute));
+    };
+
+    const validCat = data.find((cat) => !isCatBanned(cat));
+
+    if (validCat) {
+      setCats(validCat);
+      setViewedCats((viewedCats) => [...viewedCats, validCat]);
+    } else {
+      fetchCats();
+    }
   };
   const handleAddList = (info) => {
-    setBanList((prev) => [...banList, info]);
+    if (!banList.includes(info)) {
+      setBanList((prev) => [...prev, info]);
+    }
   };
+
+  const handleRemoveList = (itemToRemove) => {
+    setBanList((prev) => prev.filter((item) => item !== itemToRemove));
+  };
+
+  useEffect(() => {
+    console.log("ViewedCats updated:", viewedCats);
+  }, [viewedCats]);
 
   return (
     <>
-      <LeftSection images={prevImages} />
-      <h3>Select an attribute in your listing to ban it</h3>
-      {banList && banList.map((item) => <button>{item}</button>)}
+      <LeftSection images={viewedCats} />
+      <RightSection banList={banList} onRemoveItem={handleRemoveList} />
       <div className="main">
+        <h3>Select an attribute to ban it</h3>
         <span>Trippin on cat</span>
         <div>Discover cats from your wildest dreams!</div>
         <div>😺😸😹😻😼😽🙀😿😾</div>
@@ -50,45 +76,40 @@ const Main = () => {
           <>
             <div>
               <button onClick={() => handleAddList(cats.breeds[0].name)}>
-                {" "}
                 Name: <strong>{cats.breeds[0].name}</strong>
               </button>
               <button onClick={() => handleAddList(cats.breeds[0].origin)}>
-                <strong>Origin:</strong> {cats.breeds[0].origin}
+                Origin: <strong>{cats.breeds[0].origin}</strong>
               </button>
               <button
                 onClick={() =>
                   handleAddList(cats.breeds[0].weight?.imperial || "N/A")
                 }
               >
-                <strong>Weight:</strong>{" "}
-                {cats.breeds[0].weight?.imperial || "N/A"}
+                Weight:{" "}
+                <strong>{cats.breeds[0].weight?.imperial || "N/A"}</strong>
               </button>
               <button onClick={() => handleAddList(cats.breeds[0].life_span)}>
-                <strong>Life Span:</strong> {cats.breeds[0].life_span} years
+                Life Span: <strong>{cats.breeds[0].life_span} years</strong>
               </button>
             </div>
           </>
         )}
-        <button
-          onClick={() => fetchCats()}
-          style={{ marginTop: "10px", marginBottom: "20px" }}
-        >
-          Get New Cats
+        <button onClick={() => fetchCats()} className="discover-button">
+          Discover
         </button>
 
         {cats ? (
-          <div>
+          <div className="cat-display">
             <img
               src={cats.url}
               alt="cat"
               width={250}
               style={{ borderRadius: "10px" }}
             />
-            <br />
           </div>
         ) : (
-          <div>No cats yet!!!</div>
+          <div className="no-cats-message">No cats yet!!!</div>
         )}
       </div>
     </>

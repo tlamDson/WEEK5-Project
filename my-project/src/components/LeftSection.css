@@ -1,49 +1,93 @@
+/* LEFT SECTION - CAT HISTORY */
+
 .left-section-container {
   width: 400px;
-  background: transparent;
+  background-color: var(--background-secondary);
+  border-right: 1px solid var(--border-light);
   position: fixed;
   left: 0;
   top: 0;
   bottom: 0;
-  border: 1px solid black;
-  padding: 20px;
-
-  /* enable vertical scroll when content overflows */
+  padding: 32px 24px;
+  color: var(--text-primary);
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-
-  /* Firefox scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: #444 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
-.left-section-container img {
-  width: 100px;
-  height: 100px;
-  object-fit: cover;
-  border-radius: 10px;
-  border: 2px solid #ccc;
-  margin-bottom: 10px;
+/* Custom Scrollbar for Left Section */
+.left-section-container::-webkit-scrollbar {
+  width: 10px;
 }
 
+.left-section-container::-webkit-scrollbar-track {
+  background: var(--background-tertiary);
+  border-radius: 5px;
+  margin: 8px 0;
+}
+
+.left-section-container::-webkit-scrollbar-thumb {
+  background: var(--border-medium);
+  border-radius: 5px;
+  border: 2px solid var(--background-secondary);
+}
+
+.left-section-container::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Header */
+.left-section-container div:first-child {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Cat History Items */
 .left-section-container li {
   list-style: none;
-  margin-bottom: 15px;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: rgba(255, 255, 255, 0.1);
+  margin-bottom: 16px;
+  padding: 16px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
 }
 
-/* WebKit scrollbar styling (Chrome, Edge, Safari) */
-.left-section-container::-webkit-scrollbar {
-  width: 8px;
+.left-section-container li:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-medium);
 }
-.left-section-container::-webkit-scrollbar-track {
-  background: transparent;
+
+/* Cat Images in History */
+.left-section-container img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--border-light);
+  margin-bottom: 12px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
-.left-section-container::-webkit-scrollbar-thumb {
-  background-color: #444;
-  border-radius: 4px;
+
+/* Cat Info Text */
+.left-section-container li div {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 8px;
+}
+
+.left-section-container li div strong {
+  color: var(--text-primary);
+  font-weight: 600;
 }

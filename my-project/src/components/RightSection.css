@@ -1,30 +1,112 @@
+/* RIGHT SECTION - BAN LIST */
+
 .right-section-container {
   width: 400px;
-  background: transparent;
+  background-color: var(--background-secondary);
+  border-left: 1px solid var(--border-light);
   position: fixed;
   right: 0;
   top: 0;
   bottom: 0;
-  border: 1px solid black;
-
-  /* enable vertical scroll when content overflows */
+  padding: 32px 24px;
+  color: var(--text-primary);
   overflow-y: auto;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
-
-  /* Firefox scrollbar */
-  scrollbar-width: thin;
-  scrollbar-color: #444 transparent;
+  -webkit-overflow-scrolling: touch;
 }
 
-/* WebKit scrollbar styling (Chrome, Edge, Safari) */
+/* Custom Scrollbar for Right Section */
 .right-section-container::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
+
 .right-section-container::-webkit-scrollbar-track {
-  background: transparent;
+  background: var(--background-tertiary);
+  border-radius: 3px;
 }
+
 .right-section-container::-webkit-scrollbar-thumb {
-  background-color: #444;
-  border-radius: 4px;
+  background: var(--border-medium);
+  border-radius: 3px;
+}
+
+.right-section-container::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* Header */
+.right-section-container h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 8px;
+}
+
+/* Subtitle */
+.right-section-container > div:first-of-type {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+/* Ban List Container */
+.ban-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Ban Items */
+.ban-item {
+  background-color: var(--background-primary);
+  padding: 14px 20px;
+  border-radius: 20px;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid var(--border-light);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.ban-item::after {
+  content: "×";
+  position: absolute;
+  top: 50%;
+  right: 16px;
+  transform: translateY(-50%);
+  font-size: 1.3rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.ban-item:hover {
+  background-color: #fee2e2;
+  border-color: #fca5a5;
+  box-shadow: var(--shadow-md);
+}
+
+.ban-item:hover::after {
+  color: #dc2626;
+  opacity: 1;
+}
+
+/* Empty State */
+.no-bans {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+  padding: 32px 16px;
+  background-color: var(--background-tertiary);
+  border-radius: 16px;
+  border: 1px dashed var(--border-medium);
+  font-size: 0.9rem;
 }

@@ -4,7 +4,7 @@ import "./LeftSection.css";
 const LeftSection = ({ images }) => {
   return (
     <div className="left-section-container">
-      <div>HIHIHIHI</div>
+      <div>All cats we gone through</div>
       {images &&
         images.length > 0 &&
         images.map((cat, index) => (
