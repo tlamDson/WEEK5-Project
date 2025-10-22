@@ -1,0 +1,30 @@
+.right-section-container {
+  width: 400px;
+  background: transparent;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 1px solid black;
+
+  /* enable vertical scroll when content overflows */
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch; /* smooth scrolling on iOS */
+
+  /* Firefox scrollbar */
+  scrollbar-width: thin;
+  scrollbar-color: #444 transparent;
+}
+
+/* WebKit scrollbar styling (Chrome, Edge, Safari) */
+.right-section-container::-webkit-scrollbar {
+  width: 8px;
+}
+.right-section-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+.right-section-container::-webkit-scrollbar-thumb {
+  background-color: #444;
+  border-radius: 4px;
+}
